@@ -4,7 +4,7 @@ using namespace Rcpp;
 //looking for neighs
 
 // [[Rcpp::export]]
-NumericVector getNeighbours (const int idx,const NumericVector d_ ) {
+NumericVector getNeighbours (const int idx,const IntegerVector d_ ) {
 	// Dimension 0 done apart.
 	// Neighbours proposed.
 	NumericVector neighs;
@@ -30,8 +30,9 @@ NumericVector getNeighbours (const int idx,const NumericVector d_ ) {
 }
 
 //converting from idx to coord
+
 // [[Rcpp::export]]
-NumericVector idx2coord (int idx, NumericVector d_, NumericVector gridStep) {
+NumericVector idx2coord (int idx, IntegerVector d_, NumericVector gridStep) {
 	int ndims_ = gridStep.size();
 	NumericVector coords(ndims_);
 	coords[ndims_-1] = idx/d_[ndims_-2]; // First step done apart.
@@ -42,16 +43,18 @@ NumericVector idx2coord (int idx, NumericVector d_, NumericVector gridStep) {
 	}
 	coords[0] = aux; //Last step done apart.
 
+	coords=coords*gridStep;
 	return coords;
 }
 
 //converting from coords to idx
 
 // [[Rcpp::export]]
-int coord2idx (NumericVector coords,const NumericVector gridStep, int idx,const NumericVector d_) {
+int coord2idx (NumericVector coords,const NumericVector gridStep,const IntegerVector d_) {
+	int idx;
 	int ndims_ = coords.size();
 	for (int i=0;i<ndims_;i++)
-		coords[i]=coords[i]/gridStep[i];
+		coords[i]=ceil(coords[i]/gridStep[i]);
 	idx = coords[0];
 	for(int i = 1; i < ndims_; ++i)
 		idx += coords[i]*d_[i-1];

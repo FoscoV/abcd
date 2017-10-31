@@ -267,6 +267,16 @@ NumericVector abcNVm(
     SendScoutBees(fitness, f, trial, prob, fn, Foods, lb, ub, limit);
   }
   return GlobalParams;
+ //return List::create(
+    //_["Foods"]  = Foods,
+    //_["f"]      = f,
+    //_["fitness"]= fitness,
+    //_["trial"]  = trial,
+    //_["value"]  = GlobalMin,
+    //_["par"]    = GlobalParams,
+    //_["counts"] = i,
+    //_["hist"]   = ans(Range(0,i),_)
+  //);
 
 }
 
